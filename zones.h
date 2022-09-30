@@ -1,18 +1,18 @@
 #ifndef _ZONES_H
 #define _ZONES_H
 
-const urule_packed_t zone_rules[50];
-const char zone_abrevs[209];
+const urule_packed_t zone_rules[46];
+const char zone_abrevs[214];
 
-#define MAX_ABREV_FORMATTER_LEN 7
+#define MAX_ABREV_FORMATTER_LEN 11
 
-const uzone_packed_t zone_defns[46];
+const uzone_packed_t zone_defns[45];
 #define UTZ_ADELAIDE            &zone_defns[ 31]
 #define UTZ_AHMEDABAD           &zone_defns[ 24]
 #define UTZ_ANCHORAGE           &zone_defns[  4]
-#define UTZ_ANKARA              &zone_defns[ 39]
+#define UTZ_ANKARA              &zone_defns[ 25]
 #define UTZ_ATLANTA             &zone_defns[ 12]
-#define UTZ_AUCKLAND            &zone_defns[ 42]
+#define UTZ_AUCKLAND            &zone_defns[ 41]
 #define UTZ_BANGALORE           &zone_defns[ 24]
 #define UTZ_BANGKOK             &zone_defns[ 18]
 #define UTZ_BARCELONA           &zone_defns[ 37]
@@ -37,7 +37,7 @@ const uzone_packed_t zone_defns[46];
 #define UTZ_DENVER              &zone_defns[  7]
 #define UTZ_DUBAI               &zone_defns[ 19]
 #define UTZ_GUADALAJARA         &zone_defns[ 11]
-#define UTZ_GUAM                &zone_defns[ 43]
+#define UTZ_GUAM                &zone_defns[ 42]
 #define UTZ_GUANGZHOU           &zone_defns[ 27]
 #define UTZ_HALIFAX             &zone_defns[  8]
 #define UTZ_HAMBURG             &zone_defns[ 37]
@@ -46,11 +46,11 @@ const uzone_packed_t zone_defns[46];
 #define UTZ_HELSINKI            &zone_defns[ 38]
 #define UTZ_HOBART              &zone_defns[ 34]
 #define UTZ_HONG_KONG           &zone_defns[ 20]
-#define UTZ_HONOLULU            &zone_defns[ 44]
+#define UTZ_HONOLULU            &zone_defns[ 43]
 #define UTZ_HOUSTON             &zone_defns[  6]
 #define UTZ_HYDERABAD           &zone_defns[ 24]
 #define UTZ_INLAND_EMPIRE       &zone_defns[  9]
-#define UTZ_ISTANBUL            &zone_defns[ 39]
+#define UTZ_ISTANBUL            &zone_defns[ 25]
 #define UTZ_JERUSALEM           &zone_defns[ 21]
 #define UTZ_JINAN               &zone_defns[ 27]
 #define UTZ_KARACHI             &zone_defns[ 22]
@@ -58,15 +58,15 @@ const uzone_packed_t zone_defns[46];
 #define UTZ_KOLKATA             &zone_defns[ 24]
 #define UTZ_KUWAIT              &zone_defns[ 25]
 #define UTZ_LAHORE              &zone_defns[ 22]
-#define UTZ_LONDON              &zone_defns[ 40]
+#define UTZ_LONDON              &zone_defns[ 39]
 #define UTZ_LOS_ANGELES         &zone_defns[  9]
 #define UTZ_MADRID              &zone_defns[ 37]
 #define UTZ_MANAUS              &zone_defns[ 10]
 #define UTZ_MEXICO_CITY         &zone_defns[ 11]
 #define UTZ_MIAMI               &zone_defns[ 12]
-#define UTZ_MIDWAY              &zone_defns[ 45]
+#define UTZ_MIDWAY              &zone_defns[ 44]
 #define UTZ_MILAN               &zone_defns[ 37]
-#define UTZ_MOSCOW              &zone_defns[ 41]
+#define UTZ_MOSCOW              &zone_defns[ 40]
 #define UTZ_MUMBAI              &zone_defns[ 24]
 #define UTZ_MUNICH              &zone_defns[ 37]
 #define UTZ_NAGOYA              &zone_defns[ 29]
