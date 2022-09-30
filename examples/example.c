@@ -8,7 +8,8 @@
 #include "zones.h"
 
 #include <stdio.h>
-void main() {
+void main()
+{
   printf("Total library db size: %d B\n", sizeof(zone_rules) + sizeof(zone_abrevs) + sizeof(zone_defns) + sizeof(zone_names));
 
   udatetime_t dt = {0};
@@ -20,7 +21,7 @@ void main() {
   dt.time.second = 0;
 
   uzone_t active_zone;
-  get_zone_by_name("San Francisco", &active_zone);
+  get_zone_by_name("Karachi", &active_zone);
   uoffset_t offset;
   char c = get_current_offset(&active_zone, &dt, &offset);
   printf("%s, current offset: %d.%d\n", active_zone.name, offset.hours, offset.minutes / 60);

@@ -5,6 +5,7 @@ eV Quirk
 """
 
 import xml.etree.ElementTree as ElementTree
+import os
 
 
 def main():
@@ -13,10 +14,11 @@ def main():
     tree = ElementTree.parse('vendor/android/timezones.xml')
     zones.update([child.attrib['id'] for child in tree.getroot()])
 
-    with open('majormetros') as f:
-        for line in f:
-            zones.add(line.split('\t')[1].strip())
-            zones.add(line.split('\t')[2].strip())
+    if os.path.isfile('majormetros') and os.access('majormetros', os.R_OK):
+        with open('majormetros') as f:
+            for line in f:
+                zones.add(line.split('\t')[1].strip())
+                zones.add(line.split('\t')[2].strip())
 
     with open('whitelist.txt', 'w') as f:
         f.write('\n'.join(sorted(zones)))
