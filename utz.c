@@ -9,6 +9,7 @@
 #include "utz.h"
 #include "zones.h"
 
+#ifndef UTZ_TIGHT
 const char days_of_week[] = {
     'M',
     'o',
@@ -149,11 +150,13 @@ const char months_of_year[] = {
     'r',
     '\0',
 };
+#endif
 
 const uzone_packed_t *last_zone;
 uint8_t last_year;
 urule_t cached_rules[MAX_CURRENT_RULES];
 
+#ifndef UTZ_TIGHT
 uint8_t ustrneq(const char *string1, const char *string2, uint8_t n)
 {
 #ifndef UTZ_GLOBAL_COUNTERS
@@ -195,6 +198,7 @@ char *ustrnreplace(char *dest, const char *src, char c, char *replacement, uint8
   }
   return dest;
 }
+#endif
 
 uint8_t bin_to_bcd(uint8_t value)
 {
@@ -417,7 +421,7 @@ char get_current_offset(uzone_t *zone, udatetime_t *datetime, uoffset_t *offset)
   return rule->letter;
 }
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 void unpack_zone(const uzone_packed_t *zone_in, const char *name, uzone_t *zone_out)
 {
   zone_out->src = zone_in;
@@ -450,7 +454,7 @@ const char *get_index(const char *list, uint8_t i)
   return list;
 }
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 void get_zone_by_name(char *name, uzone_t *zone_out)
 {
 #ifndef UTZ_GLOBAL_COUNTERS

@@ -332,6 +332,8 @@ class TimeZoneDatabase(object):
 
         h_filename = h_filename.upper().replace('.', '_')
         h_buf = ['#ifndef _%s' % h_filename, '#define _%s' % h_filename, '']
+        if tight:
+            h_buf.extend(['#define UTZ_TIGHT',''])
         c_buf = ['#include "utz.h"', '']
         rule_groups = self.rule_groups()
         rule_group_starts = self._pack_rules(rule_groups, c_buf, h_buf)
@@ -371,8 +373,8 @@ class TimeZoneDatabase(object):
             if fmt not in packed_formatters:
                 packed_formatters[fmt] = {'fmt': fmt}
 
-        c_buf.extend(['', '#ifdef UTZ_TIGHT'])
-        h_buf.extend(['', '#ifdef UTZ_TIGHT'])
+        c_buf.extend(['', '#ifndef UTZ_TIGHT'])
+        h_buf.extend(['', '#ifndef UTZ_TIGHT'])
 
         c_buf.append('PLACEHOLDER')
         total_char = 0
@@ -433,7 +435,7 @@ class TimeZoneDatabase(object):
                     if len(name) > max_len:
                         max_len = len(name)
 
-        c_buf.append('#ifdef UTZ_TIGHT')
+        c_buf.append('#ifndef UTZ_TIGHT')
 
         c_buf.append('PLACEHOLDER')
         total_char = 0
@@ -462,7 +464,7 @@ class TimeZoneDatabase(object):
         c_buf[c_buf.index(
             'PLACEHOLDER')] = 'const unsigned char zone_names[%d] = {' % total_char
         c_buf.append('};')
-        h_buf.extend(['', '#ifdef UTZ_TIGHT'])
+        h_buf.extend(['', '#ifndef UTZ_TIGHT'])
         h_buf.extend(['#define NUM_ZONE_NAMES %d' % len(
             aliases), '#define MAX_ZONE_NAME_LEN %d' % max_char, ''])
         h_buf.append('const unsigned char zone_names[%d];' % total_char)

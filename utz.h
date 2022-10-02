@@ -96,7 +96,9 @@ typedef struct uzone_packed_t
   int8_t offset_inc_minutes;
   uint8_t rules_idx;
   uint8_t rules_len;
+#ifndef UTZ_TIGHT
   uint16_t abrev_formatter;
+#endif
 } uzone_packed_t;
 
 /** @struct urule_packed_t
@@ -284,7 +286,7 @@ urule_t *get_active_rule(urule_t *rules, udatetime_t *datetime);
  */
 char get_current_offset(uzone_t *zone, udatetime_t *datetime, uoffset_t *offset);
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 /** @brief unpack timezone
  *
  *  @param name the name of the timezone
@@ -302,7 +304,7 @@ void unpack_zone(const uzone_packed_t *zone_in, const char *name, uzone_t *zone_
  */
 uint8_t get_next(const char **list);
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 /** @brief lookup a zone via zone_names
  *
  *  @param name the name of the zone to find
@@ -348,7 +350,7 @@ static uint16_t utz_k;
 extern const urule_packed_t zone_rules[];
 extern const uzone_packed_t zone_defns[];
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 extern const char zone_abrevs[];
 extern const unsigned char zone_names[];
 #endif

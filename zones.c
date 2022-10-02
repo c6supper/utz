@@ -64,7 +64,7 @@ const urule_packed_t zone_rules[60] = {
 };
 
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 const char zone_abrevs[298] = {
 'E','E','S','T','\0',
 'W','E','%','c','T','\0',
@@ -269,7 +269,7 @@ const uzone_packed_t zone_defns[64] = {
 { 52,   0,   0, 290},
 };
 
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
 const unsigned char zone_names[722] = {
                              'A','d','e','l','a','i','d','e','\0',  47, // Adelaide
                                      'A','l','m','a','t','y','\0',  22, // Almaty

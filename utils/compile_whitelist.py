@@ -6,13 +6,23 @@ eV Quirk
 
 import xml.etree.ElementTree as ElementTree
 import os
+import click
 
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(context_settings=CONTEXT_SETTINGS)
+@click.option('--tight', '-t',
+              default=os.environ.get('UTZ_TIGHT', True),
+              help='Tight version, without zone names')
 
-def main():
+def main(tight):
     zones = set()
 
-    tree = ElementTree.parse('vendor/android/timezones.xml')
-    zones.update([child.attrib['id'] for child in tree.getroot()])
+    if tight == False:
+        tree = ElementTree.parse('vendor/android/timezones.xml')
+        zones.update([child.attrib['id'] for child in tree.getroot()])
+    else:
+        tree = ElementTree.parse('vendor/nobo/timezones.xml')
+        zones.update([child.attrib['id'] for child in tree.getroot()])
 
     if os.path.isfile('majormetros') and os.access('majormetros', os.R_OK):
         with open('majormetros') as f:

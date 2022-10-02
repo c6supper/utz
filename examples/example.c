@@ -10,7 +10,7 @@
 #include <stdio.h>
 void main()
 {
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
   printf("Total library db size: %d B\n", sizeof(zone_rules) + sizeof(zone_abrevs) + sizeof(zone_defns) + sizeof(zone_names));
 #else
   printf("Total library db size: %d B\n", sizeof(zone_rules) + sizeof(zone_defns));
@@ -25,7 +25,7 @@ void main()
   dt.time.second = 0;
 
   uzone_t active_zone;
-#ifdef UTZ_TIGHT
+#ifndef UTZ_TIGHT
   get_zone_by_name("Karachi", &active_zone);
 #endif
   uoffset_t offset;
