@@ -15,12 +15,13 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               help='Tight version, without zone names')
 
 def main(tight):
-    zones = set()
 
     if tight == False:
+        zones = set()
         tree = ElementTree.parse('vendor/android/timezones.xml')
         zones.update([child.attrib['id'] for child in tree.getroot()])
     else:
+        zones = dict()
         tree = ElementTree.parse('vendor/nobo/timezones.xml')
         zones.update([child.attrib['id'] for child in tree.getroot()])
 
