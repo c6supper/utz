@@ -23,7 +23,10 @@ C_NAME = 'zones.c'
 @click.option('--whitelist', '-w',
               default=os.environ.get('UTZ_WHITELIST', 'whitelist.txt'),
               help='Zone whitelist.')
-def process(dir, region, include, whitelist):
+@click.option('--tight', '-t',
+              default=os.environ.get('UTZ_TIGHT', True),
+              help='Tight version, without zone names')
+def process(dir, region, include, whitelist, tight):
     db = TimeZoneDatabase()
 
     for r in region:
@@ -43,7 +46,7 @@ def process(dir, region, include, whitelist):
             for zone in f:
                 included_zones.append(zone.strip())
 
-    c_buf, h_buf = db.pack(H_NAME, included_zones)
+    c_buf, h_buf = db.pack(H_NAME, included_zones, tight)
     with open(H_NAME, 'w') as hf:
         hf.write(h_buf)
     with open(C_NAME, 'w') as cf:

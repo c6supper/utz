@@ -43,7 +43,8 @@
  *  @var utime_t::padding unused space to pad to 4 bytes
  *  @var utime_t::raw for comparisons and conversions
  */
-typedef struct utime_t {
+typedef struct utime_t
+{
   uint8_t hour;
   uint8_t minute;
   uint8_t second;
@@ -60,24 +61,26 @@ typedef struct utime_t {
  *  @var udate_t::padding unused space to pad to 4 bytes
  *  @var udate_t::raw for comparisons and conversions
  */
-typedef struct udate_t {
+typedef struct udate_t
+{
   uint8_t year;       // 00-99 or 0x00-0x99 in bcd mode (offset 2000 ???)
   uint8_t month;      // 01-12 or 0x01-0x12 in bcd mode
   uint8_t dayofmonth; // 01-31 or 0x01-0x31 in bcd mode
   uint8_t dayofweek;
 } udate_t;
 
-
 /** @brief datetime type */
-typedef struct udatetime_t {
+typedef struct udatetime_t
+{
   udate_t date;
   utime_t time;
 } udatetime_t;
 
 /** @brief timezone offset type */
-typedef struct uoffset_t {
+typedef struct uoffset_t
+{
   uint8_t minutes; // 0 to 59
-  int8_t hours; // -12 to +12
+  int8_t hours;    // -12 to +12
 } uoffset_t;
 
 /** @struct uzone_packed_t
@@ -88,7 +91,8 @@ typedef struct uoffset_t {
  *  @var uzone_packed_t::rules_len number of rule entries
  *  @var uzone_packed_t::abrev_formatter abreviation formatter
  */
-typedef struct uzone_packed_t {
+typedef struct uzone_packed_t
+{
   int8_t offset_inc_minutes;
   uint8_t rules_idx;
   uint8_t rules_len;
@@ -105,8 +109,8 @@ typedef struct uzone_packed_t {
  *
  *  @var urule_packed_t::from_year years since 2000
  *  @var urule_packed_t::to_year years since 2000
- *  @var urule_packed_t::on_dayofweek day of week (monday = 1, sunday = 7) 
- *  @var urule_packed_t::on_dayofmonth day of month 
+ *  @var urule_packed_t::on_dayofweek day of week (monday = 1, sunday = 7)
+ *  @var urule_packed_t::on_dayofmonth day of month
  *  @var urule_packed_t::at_is_local_time is time of day in local time, if not utc
  *  @var urule_packed_t::at_hours time of day, hours
  *  @var urule_packed_t::at_inc_minutes time of day, minutes, in OFFSET_INCREMENT minute increments
@@ -114,34 +118,39 @@ typedef struct uzone_packed_t {
  *  @var urule_packed_t::in_month month (1-12)
  *  @var urule_packed_t::offset_hours (0-3)
  */
-typedef struct urule_packed_t {
+typedef struct urule_packed_t
+{
   uint8_t from_year;
   uint8_t to_year;
-  uint8_t on_dayofweek:3;
-  uint8_t on_dayofmonth:5;
-  uint8_t at_is_local_time:1;
-  uint8_t at_hours:5;
-  uint8_t at_inc_minutes:2;
-  uint8_t letter:2;
-  uint8_t in_month:4;
-  uint8_t offset_hours:2;
+  uint8_t on_dayofweek : 3;
+  uint8_t on_dayofmonth : 5;
+  uint8_t at_is_local_time : 1;
+  uint8_t at_hours : 5;
+  uint8_t at_inc_minutes : 2;
+  uint8_t letter : 2;
+  uint8_t in_month : 4;
+  uint8_t offset_hours : 2;
 } urule_packed_t;
 
 /** @brief unpacked zone type */
-typedef struct uzone_t {
-  const char* name;
+typedef struct uzone_t
+{
+  const char *name;
   uoffset_t offset;
-  const urule_packed_t* rules;
+  const urule_packed_t *rules;
   uint8_t rules_len;
-  const char* abrev_formatter;
-  const uzone_packed_t* src;
+  const char *abrev_formatter;
+  const uzone_packed_t *src;
 } uzone_t;
 
 /** @brief unpacked rule type, rules for daylight savings time */
-typedef struct urule_t {
-  union {
+typedef struct urule_t
+{
+  union
+  {
     udatetime_t datetime;
-    struct {
+    struct
+    {
       udate_t date;
       utime_t time;
     };
@@ -199,7 +208,7 @@ uint8_t next_dayofweek_offset(uint8_t dayofweek_of_cur, uint8_t dayofweek);
  *  @param dt1 pointer to the second datetime
  *  @return *dt1 == *dt2
  */
-uint8_t udatetime_eq(udatetime_t* dt1, udatetime_t* dt2);
+uint8_t udatetime_eq(udatetime_t *dt1, udatetime_t *dt2);
 
 /** @brief returns *dt1 < *dt2
  *
@@ -207,7 +216,7 @@ uint8_t udatetime_eq(udatetime_t* dt1, udatetime_t* dt2);
  *  @param dt1 pointer to the second datetime
  *  @return *dt1 < *dt2
  */
-uint8_t udatetime_lt(udatetime_t* dt1, udatetime_t* dt2);
+uint8_t udatetime_lt(udatetime_t *dt1, udatetime_t *dt2);
 
 /** @brief returns *dt1 <= *dt2
  *
@@ -215,7 +224,7 @@ uint8_t udatetime_lt(udatetime_t* dt1, udatetime_t* dt2);
  *  @param dt1 pointer to the second datetime
  *  @return *dt1 <= *dt2
  */
-uint8_t udatetime_le(udatetime_t* dt1, udatetime_t* dt2);
+uint8_t udatetime_le(udatetime_t *dt1, udatetime_t *dt2);
 
 /** @brief returns *dt1 > *dt2
  *
@@ -223,7 +232,7 @@ uint8_t udatetime_le(udatetime_t* dt1, udatetime_t* dt2);
  *  @param dt1 pointer to the second datetime
  *  @return *dt1 > *dt2
  */
-uint8_t udatetime_gt(udatetime_t* dt1, udatetime_t* dt2);
+uint8_t udatetime_gt(udatetime_t *dt1, udatetime_t *dt2);
 
 /** @brief returns *dt1 >= *dt2
  *
@@ -231,7 +240,7 @@ uint8_t udatetime_gt(udatetime_t* dt1, udatetime_t* dt2);
  *  @param dt1 pointer to the second datetime
  *  @return *dt1 >= *dt2
  */
-uint8_t udatetime_ge(udatetime_t* dt1, udatetime_t* dt2);
+uint8_t udatetime_ge(udatetime_t *dt1, udatetime_t *dt2);
 
 /**************************************************************************/
 /*                         zone rule functions                            */
@@ -244,7 +253,7 @@ uint8_t udatetime_ge(udatetime_t* dt1, udatetime_t* dt2);
  *  @param rule_out pointer for the output unpacked rule
  *  @return void
  */
-void unpack_rule(const urule_packed_t* rule_in, uint8_t cur_year, urule_t* rule_out);
+void unpack_rule(const urule_packed_t *rule_in, uint8_t cur_year, urule_t *rule_out);
 
 /** @brief unpack rules that are active in the current year
  *
@@ -256,7 +265,7 @@ void unpack_rule(const urule_packed_t* rule_in, uint8_t cur_year, urule_t* rule_
  *  @param rules_out pointer for the output unpacked rules
  *  @return void
  */
-void unpack_rules(const urule_packed_t* rules_in, uint8_t num_rules, uint8_t cur_year, urule_t* rules_out);
+void unpack_rules(const urule_packed_t *rules_in, uint8_t num_rules, uint8_t cur_year, urule_t *rules_out);
 
 /** @brief get the rule that applies at datetime
  *
@@ -264,7 +273,7 @@ void unpack_rules(const urule_packed_t* rules_in, uint8_t num_rules, uint8_t cur
  *  @param datetime the datetime to check rules for
  *  @return a pointer the the rule that applies
  */
-urule_t* get_active_rule(urule_t* rules, udatetime_t* datetime);
+urule_t *get_active_rule(urule_t *rules, udatetime_t *datetime);
 
 /** @brief get the offset for zone at datetime, taking into account daylight savings time rules
  *
@@ -273,8 +282,9 @@ urule_t* get_active_rule(urule_t* rules, udatetime_t* datetime);
  *  @param offset offset for zone at datetime
  *  @return abbreviation letter
  */
-char get_current_offset(uzone_t* zone, udatetime_t* datetime, uoffset_t* offset);
+char get_current_offset(uzone_t *zone, udatetime_t *datetime, uoffset_t *offset);
 
+#ifdef UTZ_TIGHT
 /** @brief unpack timezone
  *
  *  @param name the name of the timezone
@@ -282,27 +292,30 @@ char get_current_offset(uzone_t* zone, udatetime_t* datetime, uoffset_t* offset)
  *  @param zone_in pointer to output unpacked zone
  *  @return void
  */
-void unpack_zone(const uzone_packed_t* zone_in, const char* name, uzone_t* zone_out);
+void unpack_zone(const uzone_packed_t *zone_in, const char *name, uzone_t *zone_out);
+#endif
 
 /** @brief advance pointer to list and returns index to the the prev item
  *
  *  @param list pointer
  *  @return index into the array for the item before advancement
  */
-uint8_t get_next(const char** list);
+uint8_t get_next(const char **list);
 
+#ifdef UTZ_TIGHT
 /** @brief lookup a zone via zone_names
  *
  *  @param name the name of the zone to find
  *  @param zone_out pointer for zone found
  *  @return void
  */
-void get_zone_by_name(char* name, uzone_t* zone_out);
+void get_zone_by_name(char *name, uzone_t *zone_out);
+#endif
 
-int16_t udatetime_cmp(udatetime_t* dt1, udatetime_t* dt2);
+int16_t udatetime_cmp(udatetime_t *dt1, udatetime_t *dt2);
 
 #ifdef UTZ_MKTIME
-uint32_t umktime(udatetime_t* dt);
+uint32_t umktime(udatetime_t *dt);
 #endif
 /**************************************************************************/
 /*                                globals                                 */
@@ -317,8 +330,8 @@ extern const char _days_of_week[];
 extern const uint8_t _months_of_year_idx[];
 extern const char _months_of_year[];
 
-//FIXME
-const char* get_index(const char* list, uint8_t i);
+// FIXME
+const char *get_index(const char *list, uint8_t i);
 
 #ifdef UTZ_GLOBAL_COUNTERS
 static uint8_t utz_i, utz_j;
@@ -334,7 +347,10 @@ static uint16_t utz_k;
 
 extern const urule_packed_t zone_rules[];
 extern const uzone_packed_t zone_defns[];
+
+#ifdef UTZ_TIGHT
 extern const char zone_abrevs[];
 extern const unsigned char zone_names[];
+#endif
 
 #endif /* _UTZ_H */

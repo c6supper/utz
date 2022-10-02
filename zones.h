@@ -2,9 +2,13 @@
 #define _ZONES_H
 
 const urule_packed_t zone_rules[60];
+
+#ifdef UTZ_TIGHT
 const char zone_abrevs[298];
 
 #define MAX_ABREV_FORMATTER_LEN 11
+
+#endif
 
 const uzone_packed_t zone_defns[64];
 #define UTZ_ADELAIDE         &zone_defns[ 47]
@@ -85,8 +89,11 @@ const uzone_packed_t zone_defns[64];
 #define UTZ_YEKATERINBURG    &zone_defns[ 37]
 #define UTZ_YEREVAN          &zone_defns[ 25]
 
+#ifdef UTZ_TIGHT
 #define NUM_ZONE_NAMES 77
 #define MAX_ZONE_NAME_LEN 14
 
 const unsigned char zone_names[722];
+#endif
+
 #endif /* _ZONES_H */

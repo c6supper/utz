@@ -63,6 +63,8 @@ const urule_packed_t zone_rules[60] = {
 { 13, 255, 7,  0,  1,  1, 0, 1, 10, 0}, // 	Zion	2013	max	-	Oct	lastSun	2:00	0	S
 };
 
+
+#ifdef UTZ_TIGHT
 const char zone_abrevs[298] = {
 'E','E','S','T','\0',
 'W','E','%','c','T','\0',
@@ -121,6 +123,8 @@ const char zone_abrevs[298] = {
 '+','1','2','\0',
 '+','1','3','/','+','1','4','\0',
 };
+
+#endif
 
 const uzone_packed_t zone_defns[64] = {
 // Africa/Cairo	2:00	Egypt	EE%sT
@@ -265,6 +269,7 @@ const uzone_packed_t zone_defns[64] = {
 { 52,   0,   0, 290},
 };
 
+#ifdef UTZ_TIGHT
 const unsigned char zone_names[722] = {
                              'A','d','e','l','a','i','d','e','\0',  47, // Adelaide
                                      'A','l','m','a','t','y','\0',  22, // Almaty
@@ -344,3 +349,5 @@ const unsigned char zone_names[722] = {
          'Y','e','k','a','t','e','r','i','n','b','u','r','g','\0',  37, // Yekaterinburg
                                  'Y','e','r','e','v','a','n','\0',  25, // Yerevan
 };
+#endif
+

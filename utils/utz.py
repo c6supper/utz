@@ -304,14 +304,16 @@ class TimeZoneDatabase(object):
                 del rule_groups[group]
         return rule_groups
 
-    def pack(self, h_filename, included_aliases=None):
-        whitelisted_zones = included_aliases
-        # all the android defined zones should be included
-        # whitelisted_zones = []
-        # for alias in included_aliases:
-        #     for link in self.links:
-        #         if link.to == alias or link._from == alias:
-        #             whitelisted_zones.append(link._from)
+    def pack(self, h_filename, included_aliases=None, tight=True):
+        whitelisted_zones = []
+
+        if tight:
+            whitelisted_zones = included_aliases
+        else:
+            for alias in included_aliases:
+                for link in self.links:
+                    if link.to == alias or link._from == alias:
+                        whitelisted_zones.append(link._from)
 
         whitelisted_rules = []
         zones = []
@@ -335,7 +337,7 @@ class TimeZoneDatabase(object):
         rule_group_starts = self._pack_rules(rule_groups, c_buf, h_buf)
         c_buf.append('')
         zone_indexes = self._pack_zones(
-            rule_groups, rule_group_starts, c_buf, h_buf)
+            rule_groups, rule_group_starts, c_buf, h_buf, tight)
         c_buf.append('')
         self._pack_links(zone_indexes, c_buf, h_buf, included_aliases)
         c_buf.append('')
@@ -359,7 +361,7 @@ class TimeZoneDatabase(object):
 
         return group_idx
 
-    def _pack_zones(self, rule_groups, rule_group_starts, c_buf, h_buf):
+    def _pack_zones(self, rule_groups, rule_group_starts, c_buf, h_buf, tight=True):
         packed_zones = OrderedDict()
         packed_formatters = OrderedDict()
         zone_indexes = {}
@@ -368,6 +370,9 @@ class TimeZoneDatabase(object):
             fmt = zone.format
             if fmt not in packed_formatters:
                 packed_formatters[fmt] = {'fmt': fmt}
+
+        c_buf.extend(['', '#ifdef UTZ_TIGHT'])
+        h_buf.extend(['', '#ifdef UTZ_TIGHT'])
 
         c_buf.append('PLACEHOLDER')
         total_char = 0
@@ -384,10 +389,13 @@ class TimeZoneDatabase(object):
 
         c_buf.append('};')
         c_buf.append('')
+
         c_buf[c_buf.index('PLACEHOLDER')
-              ] = 'const char zone_abrevs[%d] = {' % total_char
+            ] = 'const char zone_abrevs[%d] = {' % total_char
         h_buf.extend(['const char zone_abrevs[%d];' % total_char, ''])
         h_buf.extend(['#define MAX_ABREV_FORMATTER_LEN %d' % max_char, ''])
+        c_buf.extend(['#endif', ''])
+        h_buf.extend(['#endif', ''])
 
         for zone in sorted(self.zones):
             packed_zone = zone.pack(
@@ -425,6 +433,8 @@ class TimeZoneDatabase(object):
                     if len(name) > max_len:
                         max_len = len(name)
 
+        c_buf.append('#ifdef UTZ_TIGHT')
+
         c_buf.append('PLACEHOLDER')
         total_char = 0
         max_char = 0
@@ -452,6 +462,9 @@ class TimeZoneDatabase(object):
         c_buf[c_buf.index(
             'PLACEHOLDER')] = 'const unsigned char zone_names[%d] = {' % total_char
         c_buf.append('};')
-        h_buf.extend(['', '#define NUM_ZONE_NAMES %d' % len(
+        h_buf.extend(['', '#ifdef UTZ_TIGHT'])
+        h_buf.extend(['#define NUM_ZONE_NAMES %d' % len(
             aliases), '#define MAX_ZONE_NAME_LEN %d' % max_char, ''])
         h_buf.append('const unsigned char zone_names[%d];' % total_char)
+        c_buf.extend(['#endif', ''])
+        h_buf.extend(['#endif', ''])
