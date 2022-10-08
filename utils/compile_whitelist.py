@@ -21,7 +21,7 @@ def main(tight):
         tree = ElementTree.parse('vendor/android/timezones.xml')
         zones.update([child.attrib['id'] for child in tree.getroot()])
     else:
-        zones = dict()
+        zones = set()
         tree = ElementTree.parse('vendor/nobo/timezones.xml')
         zones.update([child.attrib['id'] for child in tree.getroot()])
 

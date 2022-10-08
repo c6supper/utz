@@ -10,7 +10,7 @@ from datetime import date
 from functools import total_ordering
 from sets import Set
 
-CURRENT_YEAR = date.today().year
+CURRENT_YEAR = 2020
 MAX_FMT_LEN = 5
 
 TZ_TYPES = ['Rule', 'Zone', 'Link']

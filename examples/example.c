@@ -25,8 +25,9 @@ void main()
   dt.time.second = 0;
 
   uzone_t active_zone;
+  
 #ifndef UTZ_TIGHT
-  get_zone_by_name("Karachi", &active_zone);
+  get_zone_by_name("America/Asuncion", &active_zone);
 #endif
   uoffset_t offset;
   char c = get_current_offset(&active_zone, &dt, &offset);
