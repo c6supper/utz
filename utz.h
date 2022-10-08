@@ -301,6 +301,8 @@ void get_zone_by_name(char* name, uzone_t* zone_out);
 
 int16_t udatetime_cmp(udatetime_t* dt1, udatetime_t* dt2);
 
+void dump_rules(const urule_packed_t* rules_in, uint8_t num_rules);
+
 #ifdef UTZ_MKTIME
 uint32_t umktime(udatetime_t* dt);
 #endif

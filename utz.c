@@ -229,6 +229,22 @@ char get_current_offset(uzone_t* zone, udatetime_t* datetime, uoffset_t* offset)
   return rule->letter;
 }
 
+void dump_rules(const urule_packed_t* rules_in, uint8_t num_rules) {
+#ifndef UTZ_GLOBAL_COUNTERS
+  uint8_t utz_i;
+#endif
+  uint8_t l = 0;
+  uint8_t current_rule_count = 1;
+
+  for (utz_i = 0; utz_i < num_rules && current_rule_count < MAX_CURRENT_RULES; utz_i++) {
+    printf("from_year=%d,to_year=%d,on_dayofweek=%d,on_dayofmonth=%d,at_is_local_time=%d,\
+at_hours=%d,at_inc_minutes=%d,letter=%d,in_month=%d,offset_hours=%d\n",\
+    UYEAR_OFFSET + rules_in[utz_i].from_year, UYEAR_OFFSET + rules_in[utz_i].to_year,rules_in[utz_i].on_dayofweek,\
+    rules_in[utz_i].on_dayofmonth,rules_in[utz_i].at_is_local_time,rules_in[utz_i].at_hours,\
+    rules_in[utz_i].at_inc_minutes,rules_in[utz_i].letter,rules_in[utz_i].in_month,rules_in[utz_i].offset_hours);
+  }
+}
+
 void unpack_zone(const uzone_packed_t* zone_in, const char* name, uzone_t* zone_out) {
   zone_out->src = zone_in;
   zone_out->name = name;
